@@ -1,0 +1,162 @@
+components:
+  schemas:
+    User:
+      type: object
+      required: [uid, email]
+      properties:
+        uid:
+          type: string
+          description: Firebase user UID
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+          nullable: true
+        photoURL:
+          type: string
+          nullable: true
+        emailVerified:
+          type: boolean
+        phoneNumber:
+          type: string
+          nullable: true
+        disabled:
+          type: boolean
+        metadata:
+          type: object
+          properties:
+            creationTime:
+              type: string
+              format: date-time
+            lastSignInTime:
+              type: string
+              format: date-time
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          description: "User password"
+
+    RegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+          description: "Minimum 6 characters (Firebase requirement)"
+
+    AuthResponse:
+      type: object
+      required: [idToken, refreshToken, expiresIn, user]
+      properties:
+        idToken:
+          type: string
+          description: Firebase ID token (JWT). Use this as the access token.
+        refreshToken:
+          type: string
+          description: Token used to refresh idToken.
+        expiresIn:
+          type: integer
+          description: Seconds until idToken expires.
+        user:
+          $ref: "#/components/schemas/User"
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        '201':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        '400':
+          $ref: "../shared/errors.yaml#/components/responses/BadRequestError"
+        '401':
+          $ref: "../shared/errors.yaml#/components/responses/UnauthorizedError"
+        '403':
+          $ref: "../shared/errors.yaml#/components/responses/ForbiddenError"
+        '409':
+          $ref: "../shared/errors.yaml#/components/responses/ConflictError"
+        '429':
+          $ref: "../shared/errors.yaml#/components/responses/TooManyRequestsError"
+        '500':
+          $ref: "../shared/errors.yaml#/components/responses/InternalServerError"
+
+  /auth/login:
+    post:
+      summary: Login an existing user with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        '400':
+          $ref: "../shared/errors.yaml#/components/responses/BadRequestError"
+        '401':
+          $ref: "../shared/errors.yaml#/components/responses/UnauthorizedError"
+        '403':
+          $ref: "../shared/errors.yaml#/components/responses/ForbiddenError"
+        '429':
+          $ref: "../shared/errors.yaml#/components/responses/TooManyRequestsError"
+        '500':
+          $ref: "../shared/errors.yaml#/components/responses/InternalServerError"
+
+  /auth/token/refresh:
+    post:
+      summary: Refresh a user's ID token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refreshToken]
+              properties:
+                refreshToken:
+                  type: string
+                  description: The refresh token returned from login/register
+      responses:
+        '200':
+          description: Access token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        '400':
+          $ref: "../shared/errors.yaml#/components/responses/BadRequestError"
+        '401':
+          $ref: "../shared/errors.yaml#/components/responses/UnauthorizedError"
+        '403':
+          $ref: "../shared/errors.yaml#/components/responses/ForbiddenError"
+        '429':
+          $ref: "../shared/errors.yaml#/components/responses/TooManyRequestsError"
+        '500':
+          $ref: "../shared/errors.yaml#/components/responses/InternalServerError"

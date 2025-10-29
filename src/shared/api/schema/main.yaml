@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: AM Beat Store Firebase Auth API
+  description: OpenAPI schema for user authentication with email, password, and token management.
+  version: 1.0.0
+
+servers:
+  - url: https://your-domain.com/api/v1
+
+paths:
+  $ref: "./endpoints/auth.yaml#/paths"
+
+components:
+  $ref: "./endpoints/auth.yaml#/components"
