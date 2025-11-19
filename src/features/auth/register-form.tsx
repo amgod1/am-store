@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRegister } from "./use-register"
 
 const registerSchema = z
   .object({
@@ -29,14 +30,17 @@ export const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
   })
 
-  const onSubmit = form.handleSubmit((data) => console.log(data))
+  const { register, isPending, errorMessage } = useRegister()
+
+  const onSubmit = form.handleSubmit(register)
 
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
         <FormField
-          control={form.control}
           name="email"
+          control={form.control}
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -48,8 +52,9 @@ export const RegisterForm = () => {
           )}
         />
         <FormField
-          control={form.control}
           name="password"
+          control={form.control}
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
@@ -61,8 +66,9 @@ export const RegisterForm = () => {
           )}
         />
         <FormField
-          control={form.control}
           name="confirmPassword"
+          control={form.control}
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Confirm password</FormLabel>
@@ -73,7 +79,12 @@ export const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Register</Button>
+
+        {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
+
+        <Button disabled={isPending} type="submit">
+          Register
+        </Button>
       </form>
     </Form>
   )

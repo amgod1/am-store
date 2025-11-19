@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useLogin } from "./use-login"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),
@@ -23,14 +24,17 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = form.handleSubmit((data) => console.log(data))
+  const { login, isPending, errorMessage } = useLogin()
+
+  const onSubmit = form.handleSubmit(login)
 
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
         <FormField
-          control={form.control}
           name="email"
+          control={form.control}
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
@@ -42,8 +46,9 @@ export const LoginForm = () => {
           )}
         />
         <FormField
-          control={form.control}
           name="password"
+          control={form.control}
+          disabled={isPending}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
@@ -54,7 +59,12 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Login</Button>
+
+        {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
+
+        <Button disabled={isPending} type="submit">
+          Login
+        </Button>
       </form>
     </Form>
   )
