@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -10,21 +9,19 @@ import {
 export type AuthConfig = {
   form: React.ReactNode
   title: React.ReactNode
-  description: React.ReactNode
   footerText: React.ReactNode
 }
 
-export const AuthLayout = ({ form, title, description, footerText }: AuthConfig) => {
+export const AuthLayout = ({ form, title, footerText }: AuthConfig) => {
   return (
     <main className="grow flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-[500px]">
         <CardHeader>
           <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent>{form}</CardContent>
         <CardFooter>
-          <p className="text-sm text-muted-foreground [&_a]:underline [&_a]:text-primary">
+          <p className="text-sm underline">
             {footerText}
           </p>
         </CardFooter>

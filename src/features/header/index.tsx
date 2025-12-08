@@ -9,7 +9,7 @@ export const AppHeader = () => {
   const handleNavigate = (route: string) => () => navigate(route)
 
   return (
-    <header className="flex justify-between">
+    <header className="flex justify-between py-2 border-b-2 border-foreground">
       <Button
         variant="outline"
         size="icon"

@@ -39,7 +39,7 @@ export const authHandlers = [
     await delay()
 
     if (mockUsers.some((u) => u.email === email)) {
-      return errorResponse("Пользователь уже существует", "USER_EXISTS", 409)
+      return errorResponse("User already exists", "USER_EXISTS", 409)
     }
 
     const newUser: ApiSchemas["User"] = { uid: String(mockUsers.length + 1), email }
@@ -61,7 +61,7 @@ export const authHandlers = [
     const refreshToken = cookies.refreshToken
 
     if (!refreshToken) {
-      return errorResponse("Refresh token не найден", "REFRESH_TOKEN_MISSING", 401)
+      return errorResponse("Refresh token not found", "REFRESH_TOKEN_MISSING", 401)
     }
 
     try {
@@ -69,7 +69,7 @@ export const authHandlers = [
       const user = mockUsers.find((u) => u.uid === session.userId)
 
       if (!user) {
-        return errorResponse("Пользователь не найден", "USER_NOT_FOUND", 401)
+        return errorResponse("User not found", "USER_NOT_FOUND", 401)
       }
 
       const { accessToken: idToken, refreshToken: newRefreshToken } = await generateTokens({
@@ -82,7 +82,7 @@ export const authHandlers = [
         { status: 200, headers: { "Set-Cookie": createRefreshTokenCookie(newRefreshToken) } }
       )
     } catch {
-      return errorResponse("Недействительный refresh token", "INVALID_REFRESH_TOKEN", 401)
+      return errorResponse("Invalid refresh token", "INVALID_REFRESH_TOKEN", 401)
     }
   }),
 ]

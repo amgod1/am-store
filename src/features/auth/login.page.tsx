@@ -7,12 +7,9 @@ const LoginPage = () => {
   return (
     <AuthLayout
       title="Login"
-      description="Input email and password to login"
       form={<LoginForm />}
       footerText={
-        <>
-          Don't have an account? <Link to={ROUTES.REGISTER}>Register</Link>
-        </>
+        <Link to={ROUTES.REGISTER}>Don't have an account?</Link>
       }
     />
   )

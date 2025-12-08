@@ -17,7 +17,7 @@ import { useRegister } from "./use-register"
 const registerSchema = z
   .object({
     email: z.email("Invalid email"),
-    password: z.string().min(6, "Minimum password length is 6"),
+    password: z.string("Password required").min(6, "Minimum password length is 6"),
     confirmPassword: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -82,7 +82,7 @@ export const RegisterForm = () => {
 
         {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
 
-        <Button disabled={isPending} type="submit">
+        <Button variant="outline" disabled={isPending} type="submit">
           Register
         </Button>
       </form>

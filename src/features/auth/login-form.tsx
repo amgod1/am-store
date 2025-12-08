@@ -16,7 +16,7 @@ import { useLogin } from "./use-login"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),
-  password: z.string().min(6, "Minimum password length is 6"),
+  password: z.string("Password required").min(6, "Minimum password length is 6"),
 })
 
 export const LoginForm = () => {
@@ -62,7 +62,7 @@ export const LoginForm = () => {
 
         {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
 
-        <Button disabled={isPending} type="submit">
+        <Button variant="outline" disabled={isPending} type="submit">
           Login
         </Button>
       </form>
