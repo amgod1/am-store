@@ -33,6 +33,13 @@ components:
           schema:
             $ref: "#/components/schemas/Error"
 
+    NotFoundError:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
     ConflictError:
       description: Conflict
       content:

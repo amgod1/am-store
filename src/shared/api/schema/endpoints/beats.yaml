@@ -1,0 +1,133 @@
+components:
+  schemas:
+    Beat:
+      type: object
+      required:
+        - id
+        - title
+        - bpm
+        - available
+        - tags
+        - fileLink
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        title:
+          type: string
+          example: "Midnight Lo-fi"
+        bpm:
+          type: integer
+          example: 90
+        available:
+          type: boolean
+          default: true
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+        fileLink:
+          type: string
+          format: uri
+          example: "https://storage.googleapis.com/beats/midnight-lofi.wav"
+
+    Tag:
+      type: object
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Chill"
+
+    Beats:
+      type: array
+      items:
+        $ref: '#/components/schemas/Beat'
+
+    BeatsResponse:
+      type: object
+      required:
+        - list
+        - totalPages
+        - totalCount
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Beat'
+        totalPages:
+          type: integer
+          example: 5
+        totalCount:
+          type: integer
+          example: 50
+
+paths:
+  /beats:
+    get:
+      summary: Get a paginated list of beats
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 10
+        - name: search
+          in: query
+          description: Search term to filter beats by title
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Field to sort by
+          schema:
+            type: string
+            enum: [createdAt, updatedAt, lastOpenedAt, name]
+      responses:
+        '200':
+          description: A paginated list of beats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatsResponse'
+        '500':
+          $ref: "../shared/errors.yaml#/components/responses/InternalServerError"
+
+  /beats/{id}:
+    get:
+      summary: Get a single beat by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the beat
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Beat found and retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Beat'
+        '404':
+          description: Beat not found
+          $ref: "../shared/errors.yaml#/components/responses/NotFoundError" 
+        '400':
+          $ref: "../shared/errors.yaml#/components/responses/BadRequestError"
+        '500':
+          $ref: "../shared/errors.yaml#/components/responses/InternalServerError"

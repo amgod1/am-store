@@ -1,14 +1,41 @@
 openapi: 3.0.3
 info:
-  title: AM Beat Store Firebase Auth API
-  description: OpenAPI schema for user authentication with email, password, and token management.
+  title: AM Beat Store API
+  description: Combined API for Firebase Auth and Beat Management.
   version: 1.0.0
 
 servers:
   - url: https://your-domain.com/api/v1
 
 paths:
-  $ref: "./endpoints/auth.yaml#/paths"
+  /auth/register:
+    $ref: "./endpoints/auth.yaml#/paths/~1auth~1register"
+  /auth/login:
+    $ref: "./endpoints/auth.yaml#/paths/~1auth~1login"
+  /auth/token/refresh:
+    $ref: "./endpoints/auth.yaml#/paths/~1auth~1token~1refresh"
+  
+  /beats:
+    $ref: "./endpoints/beats.yaml#/paths/~1beats"
+  /beats/{id}:
+    $ref: "./endpoints/beats.yaml#/paths/~1beats~1{id}"
 
 components:
-  $ref: "./endpoints/auth.yaml#/components"
+  schemas:
+    # Auth Schemas
+    User:
+      $ref: "./endpoints/auth.yaml#/components/schemas/User"
+    LoginRequest:
+      $ref: "./endpoints/auth.yaml#/components/schemas/LoginRequest"
+    RegisterRequest:
+      $ref: "./endpoints/auth.yaml#/components/schemas/RegisterRequest"
+    AuthResponse:
+      $ref: "./endpoints/auth.yaml#/components/schemas/AuthResponse"
+    
+    # Beats Schemas
+    Tag:
+      $ref: "./endpoints/beats.yaml#/components/schemas/Tag"
+    Beat:
+      $ref: "./endpoints/beats.yaml#/components/schemas/Beat"
+    Beats:
+      $ref: "./endpoints/beats.yaml#/components/schemas/Beats"

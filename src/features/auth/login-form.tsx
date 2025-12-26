@@ -65,7 +65,7 @@ export const LoginForm = () => {
           <p className="text-sm text-destructive">{errorMessage}</p>
         )}
 
-        <Button variant="outline" disabled={isPending} type="submit">
+        <Button variant="default" disabled={isPending} type="submit">
           Login
         </Button>
       </form>

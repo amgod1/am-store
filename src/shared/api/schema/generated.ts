@@ -143,16 +143,99 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/beats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a paginated list of beats */
+        get: {
+            parameters: {
+                query?: {
+                    /** @description Page number for pagination */
+                    page?: number;
+                    /** @description Number of items per page */
+                    limit?: number;
+                    /** @description Search term to filter beats by title */
+                    search?: string;
+                    /** @description Field to sort by */
+                    sort?: "createdAt" | "updatedAt" | "lastOpenedAt" | "name";
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description A paginated list of beats */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BeatsResponse"];
+                    };
+                };
+                500: components["responses"]["InternalServerError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/beats/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a single beat by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description The unique identifier of the beat */
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Beat found and retrieved successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Beat"];
+                    };
+                };
+                400: components["responses"]["BadRequestError"];
+                /** @description Beat not found */
+                404: components["responses"]["NotFoundError"];
+                500: components["responses"]["InternalServerError"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        RegisterRequest: {
-            /** Format: email */
-            email: string;
-            /** @description Minimum 6 characters (Firebase requirement) */
-            password: string;
-        };
         User: {
             /** @description Firebase user UID */
             uid: string;
@@ -170,6 +253,18 @@ export interface components {
                 lastSignInTime?: string;
             };
         };
+        LoginRequest: {
+            /** Format: email */
+            email: string;
+            /** @description User password */
+            password: string;
+        };
+        RegisterRequest: {
+            /** Format: email */
+            email: string;
+            /** @description Minimum 6 characters (Firebase requirement) */
+            password: string;
+        };
         AuthResponse: {
             /** @description Firebase ID token (JWT). Use this as the access token. */
             idToken: string;
@@ -179,17 +274,44 @@ export interface components {
             expiresIn: number;
             user: components["schemas"]["User"];
         };
+        Tag: {
+            /** @example 1 */
+            id: number;
+            /** @example Chill */
+            title: string;
+        };
+        Beat: {
+            /**
+             * Format: uuid
+             * @example 550e8400-e29b-41d4-a716-446655440000
+             */
+            id: string;
+            /** @example Midnight Lo-fi */
+            title: string;
+            /** @example 90 */
+            bpm: number;
+            /** @default true */
+            available: boolean;
+            tags: components["schemas"]["Tag"][];
+            /**
+             * Format: uri
+             * @example https://storage.googleapis.com/beats/midnight-lofi.wav
+             */
+            fileLink: string;
+        };
+        Beats: components["schemas"]["Beat"][];
         Error: {
             /** @description Human-readable error message */
             message: string;
             /** @description Machine-friendly error code (e.g. EMAIL_EXISTS, INVALID_PASSWORD) */
             code: string;
         };
-        LoginRequest: {
-            /** Format: email */
-            email: string;
-            /** @description User password */
-            password: string;
+        BeatsResponse: {
+            list: components["schemas"]["Beat"][];
+            /** @example 5 */
+            totalPages: number;
+            /** @example 50 */
+            totalCount: number;
         };
     };
     responses: {
@@ -240,6 +362,15 @@ export interface components {
         };
         /** @description Internal server error */
         InternalServerError: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["Error"];
+            };
+        };
+        /** @description NotFound */
+        NotFoundError: {
             headers: {
                 [name: string]: unknown;
             };

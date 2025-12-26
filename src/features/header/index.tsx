@@ -9,16 +9,15 @@ export const AppHeader = () => {
   const handleNavigate = (route: string) => () => navigate(route)
 
   return (
-    <header className="flex justify-between py-2 border-b-2 border-foreground">
+    <header className="py-3 sticky top-0 flex w-full items-center justify-between backdrop-blur-[8px] bg-background/60">
+      <Button variant="icon" onClick={handleNavigate(ROUTES.BEATS)}>
+        <PiSpeakerHifiFill size="2rem" />
+      </Button>
       <Button
-        variant="outline"
-        size="icon"
-        onClick={handleNavigate(ROUTES.BEATS)}
+        variant="default"
+        onClick={handleNavigate(ROUTES.LOGIN)}
         className="cursor-pointer"
       >
-        <PiSpeakerHifiFill width={"2rem"} />
-      </Button>
-      <Button onClick={handleNavigate(ROUTES.LOGIN)} className="cursor-pointer">
         Login
       </Button>
     </header>
