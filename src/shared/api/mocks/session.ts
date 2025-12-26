@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose"
+import { jwtVerify, SignJWT } from "jose"
 import { HttpResponse } from "msw"
 
 type Session = {
@@ -44,7 +44,7 @@ export async function verifyTokenOrThrow(request: Request): Promise<Session> {
         message: "Invalid token",
         code: "INVALID_TOKEN",
       },
-      { status: 401 }
+      { status: 401 },
     )
   }
   return session

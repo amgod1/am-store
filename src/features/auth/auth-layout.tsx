@@ -21,9 +21,7 @@ export const AuthLayout = ({ form, title, footerText }: AuthConfig) => {
         </CardHeader>
         <CardContent>{form}</CardContent>
         <CardFooter>
-          <p className="text-sm underline">
-            {footerText}
-          </p>
+          <p className="text-sm underline">{footerText}</p>
         </CardFooter>
       </Card>
     </main>

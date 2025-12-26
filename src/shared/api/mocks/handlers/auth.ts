@@ -1,7 +1,11 @@
+import { delay, HttpResponse } from "msw"
 import type { ApiSchemas } from "../../schema"
 import { http } from "../http"
-import { delay, HttpResponse } from "msw"
-import { createRefreshTokenCookie, generateTokens, verifyToken } from "../session.ts"
+import {
+  createRefreshTokenCookie,
+  generateTokens,
+  verifyToken,
+} from "../session.ts"
 
 const mockUsers: ApiSchemas["User"][] = [{ uid: "1", email: "admin@gmail.com" }]
 
@@ -21,7 +25,11 @@ export const authHandlers = [
     await delay()
 
     if (!user || storedPassword !== password) {
-      return errorResponse("Invalid login or password", "INVALID_CREDENTIALS", 401)
+      return errorResponse(
+        "Invalid login or password",
+        "INVALID_CREDENTIALS",
+        401,
+      )
     }
 
     const { accessToken: idToken, refreshToken } = await generateTokens({
@@ -31,7 +39,10 @@ export const authHandlers = [
 
     return HttpResponse.json(
       { idToken, refreshToken, expiresIn: 3600, user },
-      { status: 200, headers: { "Set-Cookie": createRefreshTokenCookie(refreshToken) } }
+      {
+        status: 200,
+        headers: { "Set-Cookie": createRefreshTokenCookie(refreshToken) },
+      },
     )
   }),
   http.post("/auth/register", async ({ request }) => {
@@ -42,7 +53,10 @@ export const authHandlers = [
       return errorResponse("User already exists", "USER_EXISTS", 409)
     }
 
-    const newUser: ApiSchemas["User"] = { uid: String(mockUsers.length + 1), email }
+    const newUser: ApiSchemas["User"] = {
+      uid: String(mockUsers.length + 1),
+      email,
+    }
     mockUsers.push(newUser)
     userPasswords.set(email, password)
 
@@ -53,7 +67,10 @@ export const authHandlers = [
 
     return HttpResponse.json(
       { idToken, refreshToken, expiresIn: 3600, user: newUser },
-      { status: 201, headers: { "Set-Cookie": createRefreshTokenCookie(refreshToken) } }
+      {
+        status: 201,
+        headers: { "Set-Cookie": createRefreshTokenCookie(refreshToken) },
+      },
     )
   }),
 
@@ -61,7 +78,11 @@ export const authHandlers = [
     const refreshToken = cookies.refreshToken
 
     if (!refreshToken) {
-      return errorResponse("Refresh token not found", "REFRESH_TOKEN_MISSING", 401)
+      return errorResponse(
+        "Refresh token not found",
+        "REFRESH_TOKEN_MISSING",
+        401,
+      )
     }
 
     try {
@@ -72,17 +93,25 @@ export const authHandlers = [
         return errorResponse("User not found", "USER_NOT_FOUND", 401)
       }
 
-      const { accessToken: idToken, refreshToken: newRefreshToken } = await generateTokens({
-        userId: user.uid,
-        email: user.email,
-      })
+      const { accessToken: idToken, refreshToken: newRefreshToken } =
+        await generateTokens({
+          userId: user.uid,
+          email: user.email,
+        })
 
       return HttpResponse.json(
         { idToken, refreshToken: newRefreshToken, expiresIn: 3600, user },
-        { status: 200, headers: { "Set-Cookie": createRefreshTokenCookie(newRefreshToken) } }
+        {
+          status: 200,
+          headers: { "Set-Cookie": createRefreshTokenCookie(newRefreshToken) },
+        },
       )
     } catch {
-      return errorResponse("Invalid refresh token", "INVALID_REFRESH_TOKEN", 401)
+      return errorResponse(
+        "Invalid refresh token",
+        "INVALID_REFRESH_TOKEN",
+        401,
+      )
     }
   }),
 ]

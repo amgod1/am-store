@@ -1,7 +1,7 @@
+import { PiSpeakerHifiFill } from "react-icons/pi"
+import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/shared/model/routes"
 import { Button } from "@/shared/ui/kit/button"
-import { useNavigate } from "react-router-dom"
-import { PiSpeakerHifiFill } from "react-icons/pi"
 
 export const AppHeader = () => {
   const navigate = useNavigate()

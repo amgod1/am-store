@@ -1,7 +1,7 @@
+import { useNavigate } from "react-router-dom"
 import { rqClient } from "@/shared/api/instance"
 import type { ApiSchemas } from "@/shared/api/schema"
 import { ROUTES } from "@/shared/model/routes"
-import { useNavigate } from "react-router-dom"
 
 export const useRegister = () => {
   const navigate = useNavigate()
@@ -16,7 +16,9 @@ export const useRegister = () => {
     registerMutation.mutate({ body: data })
   }
 
-  const errorMessage = registerMutation.isError ? registerMutation.error.message : null
+  const errorMessage = registerMutation.isError
+    ? registerMutation.error.message
+    : null
 
   return { register, isPending: registerMutation.isPending, errorMessage }
 }

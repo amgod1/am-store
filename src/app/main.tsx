@@ -6,9 +6,10 @@ import "./index.css"
 import { enableMocking } from "@/shared/api/mocks"
 
 enableMocking().then(() => {
+  // biome-ignore lint/style/noNonNullAssertion: basic app render
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <RouterProvider router={router} />
-    </StrictMode>
+    </StrictMode>,
   )
 })

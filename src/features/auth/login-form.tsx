@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { Button } from "@/shared/ui/kit/button"
 import {
   Form,
@@ -8,15 +11,13 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form"
 import { Input } from "@/shared/ui/kit/input"
-import { useForm } from "react-hook-form"
-
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useLogin } from "./use-login"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),
-  password: z.string("Password required").min(6, "Minimum password length is 6"),
+  password: z
+    .string("Password required")
+    .min(6, "Minimum password length is 6"),
 })
 
 export const LoginForm = () => {
@@ -60,7 +61,9 @@ export const LoginForm = () => {
           )}
         />
 
-        {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-sm text-destructive">{errorMessage}</p>
+        )}
 
         <Button variant="outline" disabled={isPending} type="submit">
           Login

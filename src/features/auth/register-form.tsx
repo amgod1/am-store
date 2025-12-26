@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { Button } from "@/shared/ui/kit/button"
 import {
   Form,
@@ -8,16 +11,14 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form"
 import { Input } from "@/shared/ui/kit/input"
-import { useForm } from "react-hook-form"
-
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useRegister } from "./use-register"
 
 const registerSchema = z
   .object({
     email: z.email("Invalid email"),
-    password: z.string("Password required").min(6, "Minimum password length is 6"),
+    password: z
+      .string("Password required")
+      .min(6, "Minimum password length is 6"),
     confirmPassword: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -80,7 +81,9 @@ export const RegisterForm = () => {
           )}
         />
 
-        {errorMessage && <p className="text-sm text-destructive">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="text-sm text-destructive">{errorMessage}</p>
+        )}
 
         <Button variant="outline" disabled={isPending} type="submit">
           Register
