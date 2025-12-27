@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form"
 import { Input } from "@/shared/ui/kit/input"
-import { useLogin } from "./use-login"
+import { useLogin } from "../model/use-login"
 
 const loginSchema = z.object({
   email: z.email("Invalid email"),

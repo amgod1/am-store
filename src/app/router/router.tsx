@@ -1,7 +1,8 @@
 import { createBrowserRouter, redirect } from "react-router-dom"
-import { ROUTES } from "../shared/model/routes"
-import { App } from "./app"
-import { Providers } from "./providers"
+import { ROUTES } from "../../shared/model/routes"
+import { App } from "../app"
+import { Providers } from "../providers"
+import { RouteGuard } from "./RouteGuard"
 
 export const router = createBrowserRouter([
   {
@@ -12,12 +13,17 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: ROUTES.LOGIN,
-        lazy: () => import("@/features/auth/login.page"),
-      },
-      {
-        path: ROUTES.REGISTER,
-        lazy: () => import("@/features/auth/register.page"),
+        element: <RouteGuard.Public />,
+        children: [
+          {
+            path: ROUTES.LOGIN,
+            lazy: () => import("@/features/auth/login.page"),
+          },
+          {
+            path: ROUTES.REGISTER,
+            lazy: () => import("@/features/auth/register.page"),
+          },
+        ],
       },
       {
         path: ROUTES.BEATS,

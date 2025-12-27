@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/shared/ui/kit/form"
 import { Input } from "@/shared/ui/kit/input"
-import { useRegister } from "./use-register"
+import { useRegister } from "../model/use-register"
 
 const registerSchema = z
   .object({
