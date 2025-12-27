@@ -1,15 +1,15 @@
 import { createBrowserRouter, redirect } from "react-router-dom"
 import { ROUTES } from "../../shared/model/routes"
 import { App } from "../app"
-import { Providers } from "../providers"
+import { AppProviders } from "../providers/app-providers"
 import { RouteGuard } from "./RouteGuard"
 
 export const router = createBrowserRouter([
   {
     element: (
-      <Providers>
+      <AppProviders>
         <App />
-      </Providers>
+      </AppProviders>
     ),
     children: [
       {

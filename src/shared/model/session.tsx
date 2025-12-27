@@ -1,20 +1,19 @@
-import { useState } from "react"
+import { createContext, useContext } from "react"
 
-const SESSION_KEY = "SESSION"
+export interface SessionContextType {
+  session: string | null
+  login: (token: string) => void
+  logout: () => void
+}
+
+export const SessionContext = createContext<SessionContextType | null>(null)
 
 export const useSession = () => {
-  const [session, setSession] = useState<string | null>(
-    localStorage.getItem(SESSION_KEY) || null,
-  )
+  const context = useContext(SessionContext)
 
-  const login = (data: string) => {
-    setSession(data)
-    localStorage.setItem(SESSION_KEY, data)
-  }
-  const logout = () => {
-    setSession(null)
-    localStorage.removeItem(SESSION_KEY)
+  if (!context) {
+    throw new Error("useSession must be used within SessionProvider")
   }
 
-  return { session, login, logout }
+  return context
 }
