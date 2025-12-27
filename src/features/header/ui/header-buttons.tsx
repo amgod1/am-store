@@ -1,8 +1,8 @@
-import { IoMdCart as CartIcon } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/shared/model/routes"
 import { useSession } from "@/shared/model/session"
 import { Button } from "@/shared/ui/kit/button"
+import { Icon } from "@/shared/ui/kit/icon"
 
 const HeaderButtons = () => {
   const navigate = useNavigate()
@@ -13,7 +13,7 @@ const HeaderButtons = () => {
   return session ? (
     <div className="flex flex-row gap-2">
       <Button variant="icon" onClick={handleNavigate(ROUTES.PROFILE)}>
-        <CartIcon size="2rem" />
+        <Icon.Profile size="2rem" />
       </Button>
       <Button variant="default" onClick={logout} className="cursor-pointer">
         Logout

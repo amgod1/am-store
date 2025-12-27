@@ -26,16 +26,21 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        element: <RouteGuard.Private />,
+        children: [
+          {
+            path: ROUTES.PROFILE,
+            lazy: () => import("@/features/profile/profile.page"),
+          },
+        ],
+      },
+      {
         path: ROUTES.BEATS,
         lazy: () => import("@/features/beats/beats.page"),
       },
       {
         path: ROUTES.BEAT,
         lazy: () => import("@/features/beat/beat.page"),
-      },
-      {
-        path: ROUTES.PROFILE,
-        lazy: () => import("@/features/profile/profile.page"),
       },
       {
         path: ROUTES.HOME,

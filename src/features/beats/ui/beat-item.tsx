@@ -1,8 +1,7 @@
-import { FaShoppingCart } from "react-icons/fa"
-import { FaCirclePlay } from "react-icons/fa6"
 import type { ApiSchemas } from "@/shared/api/schema"
 import { Button } from "@/shared/ui/kit/button"
 import { Card } from "@/shared/ui/kit/card"
+import { Icon } from "@/shared/ui/kit/icon"
 
 type Beat = ApiSchemas["Beat"]
 
@@ -12,7 +11,7 @@ const BeatItem = ({ beat }: { beat: Beat }) => {
     <Card className="p-3 flex flex-row justify-between items-center">
       <div className="flex flex-row items-center gap-4">
         <Button variant="icon">
-          <FaCirclePlay size="2rem" />
+          <Icon.Play size="2rem" />
         </Button>
         <div className="flex flex-col gap-1">
           <h3>{title}</h3>
@@ -20,7 +19,7 @@ const BeatItem = ({ beat }: { beat: Beat }) => {
         </div>
       </div>
       <Button variant="icon">
-        <FaShoppingCart size={"1.5rem"} />
+        <Icon.Cart size={"1.5rem"} />
       </Button>
     </Card>
   )
