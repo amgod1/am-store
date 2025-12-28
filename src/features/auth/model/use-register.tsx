@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { rqClient } from "@/shared/api/instance"
 import type { ApiSchemas } from "@/shared/api/schema"
+import { useSession } from "@/shared/hooks/session"
 import { ROUTES } from "@/shared/model/routes"
-import { useSession } from "@/shared/model/session"
 
 export const useRegister = () => {
   const navigate = useNavigate()

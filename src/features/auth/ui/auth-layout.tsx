@@ -14,7 +14,7 @@ export type AuthConfig = {
 
 export const AuthLayout = ({ form, title, footerText }: AuthConfig) => {
   return (
-    <main className="grow flex flex-col items-center justify-center p-4">
+    <section className="grow flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-[500px]">
         <CardHeader>
           <CardTitle>{title}</CardTitle>
@@ -24,6 +24,6 @@ export const AuthLayout = ({ form, title, footerText }: AuthConfig) => {
           <p className="text-sm underline">{footerText}</p>
         </CardFooter>
       </Card>
-    </main>
+    </section>
   )
 }

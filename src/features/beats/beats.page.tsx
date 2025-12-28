@@ -1,15 +1,26 @@
+import { usePlayer } from "@/shared/hooks/player"
 import BeatItem from "./ui/beat-item"
 import { useBeatsList } from "./use-beats"
 
 const BeatsPage = () => {
-  const beatsQuery = useBeatsList({ limit: 5 })
+  const { beats } = useBeatsList({ limit: 3 })
+  const { playBeat, currentBeat, isPlaying } = usePlayer()
 
   return (
-    <section className="flex flex-col gap-2">
-      {beatsQuery.beats.map((beat) => (
-        <BeatItem key={beat.id} beat={beat} />
-      ))}
-    </section>
+    <div className="flex flex-col gap-2">
+      {beats.map((beat) => {
+        const isActive = beat.id === currentBeat?.id
+
+        return (
+          <BeatItem
+            key={beat.id}
+            beat={beat}
+            isActive={isActive && isPlaying}
+            onPlay={() => playBeat(beat, beats)}
+          />
+        )
+      })}
+    </div>
   )
 }
 

@@ -1,11 +1,19 @@
 import { CgProfile as Profile } from "react-icons/cg"
 import { FaPlayCircle as Play } from "react-icons/fa"
+import { FaCirclePause as Pause } from "react-icons/fa6"
 import { IoMdCart as Cart } from "react-icons/io"
+import {
+  MdSkipNext as PlayerNext,
+  MdSkipPrevious as PlayerPrev,
+} from "react-icons/md"
 import { PiSpeakerHifiFill as Catalog } from "react-icons/pi"
 
 export const Icon = Object.assign(() => {}, {
   Cart,
   Catalog,
-  Play,
   Profile,
+  Play,
+  Pause,
+  PlayerPrev,
+  PlayerNext,
 })

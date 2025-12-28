@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
+import { useSession } from "@/shared/hooks/session"
 import { ROUTES } from "@/shared/model/routes"
-import { useSession } from "@/shared/model/session"
 
 interface RouteGuardProps {
   children?: React.ReactNode

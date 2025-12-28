@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
+import { useSession } from "@/shared/hooks/session"
 import { ROUTES } from "@/shared/model/routes"
-import { useSession } from "@/shared/model/session"
 import { Button } from "@/shared/ui/kit/button"
 import { Icon } from "@/shared/ui/kit/icon"
 

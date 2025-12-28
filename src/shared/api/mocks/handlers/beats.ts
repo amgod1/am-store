@@ -27,7 +27,8 @@ const mockBeats: ApiSchemas["Beat"][] = [
     bpm: 155,
     available: true,
     tags: [mockTags[0], mockTags[2]], // Travis Scott, Juice WRLD
-    fileLink: "https://storage.googleapis.com/beats/astro-thunder.wav",
+    fileLink:
+      "https://firebasestorage.googleapis.com/v0/b/am-beat-store.appspot.com/o/beats%2FEr6uOR7OANRII5uHziBIY?alt=media&token=a9b05ec5-068c-4d7b-9219-1fdccaeaf787",
   },
   {
     id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
@@ -35,7 +36,8 @@ const mockBeats: ApiSchemas["Beat"][] = [
     bpm: 86,
     available: true,
     tags: [mockTags[1]], // Drake
-    fileLink: "https://storage.googleapis.com/beats/gods-plan.wav",
+    fileLink:
+      "https://firebasestorage.googleapis.com/v0/b/am-beat-store.appspot.com/o/beats%2FIAd1eGwOEzX3UxI_InxxW?alt=media&token=8edbf0aa-a85a-4237-80ae-7bba937cbf03",
   },
   {
     id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
@@ -43,7 +45,8 @@ const mockBeats: ApiSchemas["Beat"][] = [
     bpm: 84,
     available: true,
     tags: [mockTags[2]], // Juice WRLD
-    fileLink: "https://storage.googleapis.com/beats/lucid-dreams.wav",
+    fileLink:
+      "https://firebasestorage.googleapis.com/v0/b/am-beat-store.appspot.com/o/beats%2F1Uniq3J2aRT0GY45x8cjn?alt=media&token=8bd2e905-707f-4d2c-8c6c-99b1a7c86336",
   },
   {
     id: "8e23409a-41d4-4b1e-8e23-446655440001",
@@ -51,7 +54,8 @@ const mockBeats: ApiSchemas["Beat"][] = [
     bpm: 145,
     available: true,
     tags: [mockTags[3]], // Lil Uzi Vert
-    fileLink: "https://storage.googleapis.com/beats/eternal-atake.wav",
+    fileLink:
+      "https://firebasestorage.googleapis.com/v0/b/am-beat-store.appspot.com/o/beats%2F9rwE_LwGOOo5KVNvmkWOc?alt=media&token=1a12572f-d364-4244-b60c-3db8f0baada7",
   },
   {
     id: "d9b2a1c3-4d5e-6f7g-8h9i-0j1k2l3m4n5o",
