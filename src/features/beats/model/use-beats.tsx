@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: testing */
 import { keepPreviousData } from "@tanstack/react-query"
 import { rqClient } from "@/shared/api/instance"
-import type { ApiSchemas } from "@/shared/api/schema"
+import { ApiSchemas } from "@/shared/api/schema"
 
 type UseBeatsListParams = {
   limit?: number

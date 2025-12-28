@@ -1,6 +1,6 @@
 import { usePlayer } from "@/shared/hooks/player"
+import { useBeatsList } from "./model/use-beats"
 import BeatItem from "./ui/beat-item"
-import { useBeatsList } from "./use-beats"
 
 const BeatsPage = () => {
   const { beats } = useBeatsList({ limit: 3 })
@@ -15,7 +15,8 @@ const BeatsPage = () => {
           <BeatItem
             key={beat.id}
             beat={beat}
-            isActive={isActive && isPlaying}
+            isActive={isActive}
+            isPlaying={isPlaying}
             onPlay={() => playBeat(beat, beats)}
           />
         )

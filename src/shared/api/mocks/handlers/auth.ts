@@ -1,5 +1,5 @@
 import { delay, HttpResponse } from "msw"
-import type { ApiSchemas } from "../../schema"
+import { ApiSchemas } from "../../schema"
 import { http } from "../http"
 import {
   createRefreshTokenCookie,

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react"
-import type { ApiSchemas } from "@/shared/api/schema"
+import { ApiSchemas } from "@/shared/api/schema"
 
 type Beat = ApiSchemas["Beat"]
 
@@ -50,15 +50,19 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
 
   const next = () => {
     const idx = queue.findIndex((b) => b.id === currentBeat?.id)
-    if (idx !== -1 && idx < queue.length - 1) {
-      playBeat(queue[idx + 1], queue)
+    const nextIndex = idx === queue.length - 1 ? 0 : idx + 1
+
+    if (idx !== -1) {
+      playBeat(queue[nextIndex], queue)
     }
   }
 
   const prev = () => {
     const idx = queue.findIndex((b) => b.id === currentBeat?.id)
-    if (idx > 0) {
-      playBeat(queue[idx - 1], queue)
+    const prevIndex = idx <= 0 ? queue.length - 1 : idx - 1
+
+    if (idx !== -1) {
+      playBeat(queue[prevIndex], queue)
     }
   }
 
