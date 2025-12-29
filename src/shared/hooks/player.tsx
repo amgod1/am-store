@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import {
+  createContext,
+  RefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { ApiSchemas } from "@/shared/api/schema"
 
 type Beat = ApiSchemas["Beat"]
@@ -10,6 +17,8 @@ interface PlayerContextType {
   togglePlay: () => void
   next: () => void
   prev: () => void
+  audioRef: RefObject<HTMLAudioElement>
+  seek: (time: number) => void
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null)
@@ -66,9 +75,32 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  const seek = (time: number) => {
+    if (!audioRef.current) return
+
+    audioRef.current.muted = true
+    audioRef.current.currentTime = time
+
+    const handleSeeked = () => {
+      audioRef.current.muted = false
+      audioRef.current.removeEventListener("seeked", handleSeeked)
+    }
+
+    audioRef.current.addEventListener("seeked", handleSeeked)
+  }
+
   return (
     <PlayerContext.Provider
-      value={{ currentBeat, isPlaying, playBeat, togglePlay, next, prev }}
+      value={{
+        currentBeat,
+        isPlaying,
+        playBeat,
+        togglePlay,
+        next,
+        prev,
+        audioRef,
+        seek,
+      }}
     >
       {children}
     </PlayerContext.Provider>

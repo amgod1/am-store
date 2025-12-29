@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { AppHeader } from "@/features/header"
-import { PlayerBar } from "@/features/player"
+import { Player } from "@/features/player"
 
 export const App = () => {
   return (
@@ -9,7 +9,7 @@ export const App = () => {
       <main className="flex flex-1 flex-col">
         <Outlet />
       </main>
-      <PlayerBar />
+      <Player />
     </div>
   )
 }
