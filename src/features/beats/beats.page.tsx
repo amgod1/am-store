@@ -1,6 +1,6 @@
 import { usePlayer } from "@/shared/hooks/player"
 import { useBeatsList } from "./model/use-beats"
-import BeatItem from "./ui/beat-item"
+import { BeatItem } from "./ui/beat-item"
 
 const BeatsPage = () => {
   const { beats } = useBeatsList({ limit: 3 })

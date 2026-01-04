@@ -19,6 +19,10 @@ interface PlayerContextType {
   prev: () => void
   audioRef: RefObject<HTMLAudioElement>
   seek: (time: number) => void
+  volume: number
+  isMuted: boolean
+  changeVolume: (vol: number) => void
+  toggleMute: () => void
 }
 
 const PlayerContext = createContext<PlayerContextType | null>(null)
@@ -28,6 +32,10 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentBeat, setCurrentBeat] = useState<Beat | null>(null)
   const [queue, setQueue] = useState<Beat[]>([])
   const [isPlaying, setIsPlaying] = useState(false)
+  const [volume, setVolume] = useState(1)
+  const [isMuted, setIsMuted] = useState(false)
+
+  const lastVolume = useRef(1)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: need this deps
   useEffect(() => {
@@ -37,7 +45,13 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     return () => audio.removeEventListener("ended", handleEnded)
   }, [currentBeat, queue])
 
-  const playBeat = (beat: Beat, currentList: Beat[]) => {
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume
+    }
+  }, [volume, isMuted])
+
+  const playBeat = async (beat: Beat, currentList: Beat[]) => {
     setQueue(currentList)
 
     if (currentBeat?.id === beat.id) {
@@ -47,14 +61,30 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
 
     setCurrentBeat(beat)
     audioRef.current.src = beat.fileLink
-    audioRef.current.play()
-    setIsPlaying(true)
+
+    try {
+      await audioRef.current.play()
+      setIsPlaying(true)
+    } catch (error) {
+      console.warn("Playback interrupted or blocked:", error)
+      setIsPlaying(false)
+    }
   }
 
-  const togglePlay = () => {
-    if (isPlaying) audioRef.current.pause()
-    else if (currentBeat) audioRef.current.play()
-    setIsPlaying(!isPlaying)
+  const togglePlay = async () => {
+    if (!currentBeat) return
+
+    if (isPlaying) {
+      audioRef.current.pause()
+      setIsPlaying(false)
+    } else {
+      try {
+        await audioRef.current.play()
+        setIsPlaying(true)
+      } catch (error) {
+        console.warn("Playback failed:", error)
+      }
+    }
   }
 
   const next = () => {
@@ -89,6 +119,28 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     audioRef.current.addEventListener("seeked", handleSeeked)
   }
 
+  const changeVolume = (val: number) => {
+    setVolume(val)
+    if (val > 0) {
+      lastVolume.current = val
+      setIsMuted(false)
+    } else {
+      setIsMuted(true)
+    }
+  }
+
+  const toggleMute = () => {
+    if (isMuted) {
+      // Restore from memory
+      setVolume(lastVolume.current)
+      setIsMuted(false)
+    } else {
+      // Save current to memory and mute
+      lastVolume.current = volume
+      setIsMuted(true)
+    }
+  }
+
   return (
     <PlayerContext.Provider
       value={{
@@ -100,6 +152,10 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
         prev,
         audioRef,
         seek,
+        volume,
+        isMuted,
+        changeVolume,
+        toggleMute,
       }}
     >
       {children}

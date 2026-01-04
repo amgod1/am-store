@@ -3,7 +3,7 @@ import { ApiSchemas } from "@/shared/api/schema"
 import { Button } from "@/shared/ui/kit/button"
 import { Card } from "@/shared/ui/kit/card"
 import { Icon } from "@/shared/ui/kit/icon"
-import BeatTags from "./beat-tags"
+import { BeatTags } from "./beat-tags"
 
 type BeatItem = {
   beat: ApiSchemas["Beat"]
@@ -12,7 +12,12 @@ type BeatItem = {
   onPlay: () => void
 }
 
-const BeatItem: FC<BeatItem> = ({ beat, isActive, isPlaying, onPlay }) => {
+export const BeatItem: FC<BeatItem> = ({
+  beat,
+  isActive,
+  isPlaying,
+  onPlay,
+}) => {
   const { title, bpm } = beat
 
   return (
@@ -42,5 +47,3 @@ const BeatItem: FC<BeatItem> = ({ beat, isActive, isPlaying, onPlay }) => {
     </Card>
   )
 }
-
-export default BeatItem

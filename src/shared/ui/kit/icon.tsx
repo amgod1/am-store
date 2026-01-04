@@ -1,5 +1,9 @@
 import { CgProfile as Profile } from "react-icons/cg"
-import { FaPlayCircle as Play } from "react-icons/fa"
+import {
+  FaPlayCircle as Play,
+  FaVolumeUp as Volume,
+  FaVolumeMute as VolumeMute,
+} from "react-icons/fa"
 import { FaCirclePause as Pause } from "react-icons/fa6"
 import { IoMdCart as Cart } from "react-icons/io"
 import {
@@ -16,4 +20,6 @@ export const Icon = Object.assign(() => {}, {
   Pause,
   PlayerPrev,
   PlayerNext,
+  VolumeMute,
+  Volume,
 })

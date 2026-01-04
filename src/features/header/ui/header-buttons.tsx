@@ -4,7 +4,7 @@ import { ROUTES } from "@/shared/model/routes"
 import { Button } from "@/shared/ui/kit/button"
 import { Icon } from "@/shared/ui/kit/icon"
 
-const HeaderButtons = () => {
+export const HeaderButtons = () => {
   const navigate = useNavigate()
   const { session, logout } = useSession()
 
@@ -29,5 +29,3 @@ const HeaderButtons = () => {
     </Button>
   )
 }
-
-export default HeaderButtons

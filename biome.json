@@ -40,7 +40,8 @@
         "noNamespace": "error",
         "useArrayLiterals": "error",
         "useAsConstAssertion": "error",
-        "useImportType": "off"
+        "useImportType": "off",
+        "noDefaultExport": "error"
       },
       "suspicious": {
         "noVar": "error",

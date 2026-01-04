@@ -6,7 +6,7 @@ type BeatTags = {
   tags: ApiSchemas["Tag"][]
 }
 
-const BeatTags: FC<BeatTags> = ({ tags }) => {
+export const BeatTags: FC<BeatTags> = ({ tags }) => {
   return (
     <div className="flex flex-row gap-2">
       {tags.map((tag) => (
@@ -17,5 +17,3 @@ const BeatTags: FC<BeatTags> = ({ tags }) => {
     </div>
   )
 }
-
-export default BeatTags

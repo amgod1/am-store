@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/shared/model/routes"
 import { Button } from "@/shared/ui/kit/button"
 import { Icon } from "@/shared/ui/kit/icon"
-import HeaderButtons from "./ui/header-buttons"
+import { HeaderButtons } from "./ui/header-buttons"
 
 export const AppHeader = () => {
   const navigate = useNavigate()
